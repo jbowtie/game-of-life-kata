@@ -24,7 +24,7 @@ pub fn test_empty_grid_creation() {
 #[wasm_bindgen_test]
 pub fn test_live_grid_creation() {
     // This tests we are creating the grid in the expected state
-    let input_grid = Grid::create(3, 3, &[(0,1), (1,1), (2,1)]);
+    let input_grid = Grid::create(3, 3, &[(0, 1), (1, 1), (2, 1)]);
     let expected = "◻◼◻\n\
                     ◻◼◻\n\
                     ◻◼◻\n";
@@ -35,35 +35,47 @@ pub fn test_live_grid_creation() {
 
 #[wasm_bindgen_test]
 pub fn test_count_0_neighbors() {
-    let input_grid = Grid::create(3, 3, &[(1,1)]);
+    let input_grid = Grid::create(3, 3, &[(1, 1)]);
     let count = input_grid.live_neighbor_count(1, 1);
     assert_eq!(count, 0);
 }
 #[wasm_bindgen_test]
 pub fn test_count_1_neighbor() {
-    let input_grid = Grid::create(3, 3, &[(0,0)]);
+    let input_grid = Grid::create(3, 3, &[(0, 0)]);
     let count = input_grid.live_neighbor_count(1, 1);
     assert_eq!(count, 1);
 }
 #[wasm_bindgen_test]
 pub fn test_count_2_neighbors() {
-    let input_grid = Grid::create(3, 3, &[(0,1), (2,1)]);
+    let input_grid = Grid::create(3, 3, &[(0, 1), (2, 1)]);
     let count = input_grid.live_neighbor_count(1, 1);
     assert_eq!(count, 2);
 }
 #[wasm_bindgen_test]
 pub fn test_count_8_neighbors() {
-    let input_grid = Grid::create(3, 3, &[(0,0), (0,1),(0,2),(1,0),(1,2),(2,0),(2,1),(2,2)]);
+    let input_grid = Grid::create(
+        3,
+        3,
+        &[
+            (0, 0),
+            (0, 1),
+            (0, 2),
+            (1, 0),
+            (1, 2),
+            (2, 0),
+            (2, 1),
+            (2, 2),
+        ],
+    );
     let count = input_grid.live_neighbor_count(1, 1);
     assert_eq!(count, 8);
 }
 #[wasm_bindgen_test]
 pub fn test_count_2_edge_neighbors() {
-    let input_grid = Grid::create(3, 3, &[(0,1),(1,1), (2,1)]);
+    let input_grid = Grid::create(3, 3, &[(0, 1), (1, 1), (2, 1)]);
     let count = input_grid.live_neighbor_count(0, 1);
     assert_eq!(count, 2);
 }
-
 
 // test the 3x3 blinker oscillator
 //
@@ -74,10 +86,10 @@ pub fn test_count_2_edge_neighbors() {
 #[wasm_bindgen_test]
 pub fn test_blinker_1() {
     // Let's create a grid in known state
-    let mut input_grid = Grid::create(5, 5, &[(1,2),(2,2),(3,2)]);
+    let mut input_grid = Grid::create(5, 5, &[(1, 2), (2, 2), (3, 2)]);
 
     // expected state after one generation
-    let expected_grid = Grid::create(5, 5, &[(2,1),(2,2),(2,3)]);
+    let expected_grid = Grid::create(5, 5, &[(2, 1), (2, 2), (2, 3)]);
 
     // advance the clock one generation
     input_grid.tick();
@@ -95,10 +107,10 @@ pub fn test_blinker_1() {
 #[wasm_bindgen_test]
 pub fn test_blinker_2() {
     // Let's create a grid in known state
-    let mut input_grid = Grid::create(5, 5, &[(2,1),(2,2),(2,3)]);
+    let mut input_grid = Grid::create(5, 5, &[(2, 1), (2, 2), (2, 3)]);
 
     // expected state after one generation
-    let expected_grid = Grid::create(5, 5, &[(1,2),(2,2),(3,2)]);
+    let expected_grid = Grid::create(5, 5, &[(1, 2), (2, 2), (3, 2)]);
 
     // advance the clock one generation
     input_grid.tick();
@@ -116,10 +128,10 @@ pub fn test_blinker_2() {
 #[wasm_bindgen_test]
 pub fn test_beehive() {
     // Let's create a grid in known state
-    let mut input_grid = Grid::create(6, 5, &[(2,2),(2,3),(3,1),(3,4),(4,2),(4,3)]);
+    let mut input_grid = Grid::create(6, 5, &[(2, 2), (2, 3), (3, 1), (3, 4), (4, 2), (4, 3)]);
 
     // expected state after one generation
-    let expected_grid = Grid::create(6, 5, &[(2,2),(2,3),(3,1),(3,4),(4,2),(4,3)]);
+    let expected_grid = Grid::create(6, 5, &[(2, 2), (2, 3), (3, 1), (3, 4), (4, 2), (4, 3)]);
 
     // advance the clock one generation
     input_grid.tick();

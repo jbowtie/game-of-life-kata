@@ -9,16 +9,6 @@ use wasm_bindgen::prelude::*;
 static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
 
 #[wasm_bindgen]
-extern {
-    fn alert(s: &str);
-}
-
-#[wasm_bindgen]
-pub fn greet() {
-    alert("Hello, game-of-life-kata!");
-}
-
-#[wasm_bindgen]
 #[repr(u8)]
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum Cell {
@@ -51,13 +41,11 @@ impl Grid {
             self.cells[idx] = Cell::Alive;
         }
     }
-    
+
     // create grid with given width, height, and live cells
     pub fn create(width: u32, height: u32, live: &[(u32, u32)]) -> Grid {
         // init cells as Dead
-        let cells = (0..width * height)
-            .map(|_i| { Cell::Dead })
-            .collect();
+        let cells = (0..width * height).map(|_i| Cell::Dead).collect();
 
         let mut grid = Grid {
             width,
@@ -93,6 +81,7 @@ impl Grid {
 // functions in this section are exposed to browser
 #[wasm_bindgen]
 impl Grid {
+    // called to tick the grid forward to the next generation
     pub fn tick(&mut self) {
         let mut next = self.cells.clone();
 
@@ -123,6 +112,38 @@ impl Grid {
             }
         }
         self.cells = next;
+    }
+
+    // initialize a sample grid for the browser
+    pub fn new_sample() -> Grid {
+        utils::set_panic_hook();
+
+        let width = 64;
+        let height = 64;
+
+        // this should give us a visually interesting start
+        // maybe randomize instead?
+        let cells = (0..width * height)
+            .map(|i| {
+                if i % 2 == 0 || i % 7 == 0 {
+                    Cell::Alive
+                } else {
+                    Cell::Dead
+                }
+            })
+            .collect();
+
+        Grid {
+            width,
+            height,
+            cells,
+        }
+    }
+
+    
+    // called to render the current grid
+    pub fn render(&self) -> String {
+        self.to_string()
     }
 }
 
