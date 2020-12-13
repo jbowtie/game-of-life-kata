@@ -102,6 +102,30 @@ playPauseButton.addEventListener("click", event => {
     pause();
   }
 });
+
+// click on canvas to manually flip value
+canvas.addEventListener("click", event => {
+  const boundingRect = canvas.getBoundingClientRect();
+
+  const scaleX = canvas.width / boundingRect.width;
+  const scaleY = canvas.height / boundingRect.height;
+
+  // convert from page coords to canvas coords
+  const canvasLeft = (event.clientX - boundingRect.left) * scaleX;
+  const canvasTop = (event.clientY - boundingRect.top) * scaleY;
+
+  // calculate row and col
+  const row = Math.min(Math.floor(canvasTop / (CELL_SIZE + 1)), height - 1);
+  const col = Math.min(Math.floor(canvasLeft / (CELL_SIZE + 1)), width - 1);
+
+  // toggle the cell
+  grid.toggle_cell(row, col);
+
+  // redraw
+  drawGrid();
+  drawCells();
+});
+
 // initial frame
 drawGrid();
 drawCells();

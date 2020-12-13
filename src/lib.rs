@@ -78,6 +78,15 @@ impl Grid {
     }
 }
 
+impl Cell {
+    fn toggle(&mut self) {
+        *self = match *self {
+            Cell::Dead => Cell::Alive,
+            Cell::Alive => Cell::Dead,
+        };
+    }
+}
+
 // functions in this section are exposed to browser
 #[wasm_bindgen]
 impl Grid {
@@ -140,12 +149,6 @@ impl Grid {
         }
     }
 
-    
-    // called to render the current grid
-    pub fn render(&self) -> String {
-        self.to_string()
-    }
-
     // we want some JS getters
     pub fn width(&self) -> u32 {
         self.width
@@ -157,6 +160,12 @@ impl Grid {
 
     pub fn cells(&self) -> *const Cell {
         self.cells.as_ptr()
+    }
+
+    // let JS toggle cell state
+    pub fn toggle_cell(&mut self, row: u32, column: u32) {
+        let idx = self.get_index(row, column);
+        self.cells[idx].toggle();
     }
 }
 
