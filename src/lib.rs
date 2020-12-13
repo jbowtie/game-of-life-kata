@@ -32,3 +32,29 @@ pub struct Grid {
     height: u32,
     cells: Vec<Cell>,
 }
+
+impl Grid {
+    // used by test
+    pub fn get_cells(&self) -> &[Cell] {
+        &self.cells
+    }
+
+    // given (row, col) get cell index
+    fn get_index(&self, row: u32, column: u32) -> usize {
+        (row * self.width + column) as usize
+    }
+    
+    // create grid with given width, height
+    pub fn create(width: u32, height: u32) -> Grid {
+        // init cells as Dead
+        let cells = (0..width * height)
+            .map(|_i| { Cell::Dead })
+            .collect();
+
+        Grid {
+            width,
+            height,
+            cells,
+        }
+    }
+}
