@@ -145,6 +145,19 @@ impl Grid {
     pub fn render(&self) -> String {
         self.to_string()
     }
+
+    // we want some JS getters
+    pub fn width(&self) -> u32 {
+        self.width
+    }
+
+    pub fn height(&self) -> u32 {
+        self.height
+    }
+
+    pub fn cells(&self) -> *const Cell {
+        self.cells.as_ptr()
+    }
 }
 
 // implement to_string via Display trait
