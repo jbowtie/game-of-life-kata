@@ -38,10 +38,10 @@ pub fn test_live_grid_creation() {
 #[wasm_bindgen_test]
 pub fn test_blinker_1() {
     // Let's create a grid in known state
-    let mut input_grid = Grid::create(5, 5, &[]);
+    let mut input_grid = Grid::create(5, 5, &[(1,2),(2,2),(3,2)]);
 
     // expected state after one generation
-    let expected_grid = Grid::create(5, 5, &[]);
+    let expected_grid = Grid::create(5, 5, &[(2,1),(2,2),(2,3)]);
 
     // advance the clock one generation
     input_grid.tick();
