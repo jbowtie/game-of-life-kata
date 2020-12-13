@@ -13,14 +13,26 @@ use game_of_life_kata::Grid;
 #[wasm_bindgen_test]
 pub fn test_empty_grid_creation() {
     // Let's create a grid in known state
-    let mut input_grid = Grid::create(2, 2, &[]);
-
-    // expected state after one generation
-    let expected_grid = Grid::create(2, 2, &[]);
+    let input_grid = Grid::create(2, 2, &[]);
+    let expected = "◻◻\n\
+                    ◻◻\n";
 
     // verify the state
-    assert_eq!(&input_grid.get_cells(), &expected_grid.get_cells());
+    assert_eq!(input_grid.to_string(), expected);
 }
+
+#[wasm_bindgen_test]
+pub fn test_live_grid_creation() {
+    // This tests we are creating the grid in the expected state
+    let input_grid = Grid::create(3, 3, &[(0,1), (1,1), (2,1)]);
+    let expected = "◻◼◻\n\
+                    ◻◼◻\n\
+                    ◻◼◻\n";
+
+    // verify the state
+    assert_eq!(input_grid.to_string(), expected);
+}
+
 
 // test the 3x3 blinker oscillator
 #[wasm_bindgen_test]
