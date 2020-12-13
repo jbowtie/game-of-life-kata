@@ -79,6 +79,7 @@ impl Grid {
 
                 // avoid need to special case edges
                 // means we have wraparound but that's fun to look at
+                // pad our test grids to avoid confusion
                 let neighbor_row = (row + delta_row) % self.height;
                 let neighbor_col = (column + delta_col) % self.width;
                 let idx = self.get_index(neighbor_row, neighbor_col);

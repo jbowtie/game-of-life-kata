@@ -66,7 +66,11 @@ pub fn test_count_2_edge_neighbors() {
 
 
 // test the 3x3 blinker oscillator
-// vert-to-horiz
+//
+// ◻◼◻      ◻◻◻
+// ◻◼◻  ->  ◼◼◼
+// ◻◼◻      ◻◻◻
+//
 #[wasm_bindgen_test]
 pub fn test_blinker_1() {
     // Let's create a grid in known state
@@ -83,7 +87,11 @@ pub fn test_blinker_1() {
 }
 
 // test the 3x3 blinker oscillator
-// horiz-to-vert
+//
+// ◻◻◻      ◻◼◻
+// ◼◼◼  ->  ◻◼◻
+// ◻◻◻      ◻◼◻
+//
 #[wasm_bindgen_test]
 pub fn test_blinker_2() {
     // Let's create a grid in known state
@@ -99,6 +107,25 @@ pub fn test_blinker_2() {
     assert_eq!(&input_grid.get_cells(), &expected_grid.get_cells());
 }
 
+// test the beehive still life (doesn't change)
+//
+// ◻◼◼◻      ◻◼◼◻
+// ◼◻◻◼  ->  ◼◻◻◼
+// ◻◼◼◻      ◻◼◼◻
+//
+#[wasm_bindgen_test]
+pub fn test_beehive() {
+    // Let's create a grid in known state
+    let mut input_grid = Grid::create(6, 5, &[(2,2),(2,3),(3,1),(3,4),(4,2),(4,3)]);
+
+    // expected state after one generation
+    let expected_grid = Grid::create(6, 5, &[(2,2),(2,3),(3,1),(3,4),(4,2),(4,3)]);
+
+    // advance the clock one generation
+    input_grid.tick();
+
+    // verify the state
+    assert_eq!(&input_grid.get_cells(), &expected_grid.get_cells());
+}
 // test the 4x8 from JP's example
-// test the 4x3 beehive still life
 // test a c/4 glider spaceship
