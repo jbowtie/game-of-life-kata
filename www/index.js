@@ -5,7 +5,7 @@ import {Grid, Cell} from "game-of-life-kata";
 const CELL_SIZE = 8; // px
 const GRID_COLOR = "#CCCCCC";
 const DEAD_COLOR = "#FFFFFF";
-const ALIVE_COLOR = "#000000";
+const ALIVE_COLOR = "#00468C";
 
 const grid = Grid.new_sample();
 const width = grid.width();
@@ -66,15 +66,44 @@ const drawGrid = () => {
   ctx.stroke();
 };
 
+// returned by requestAnimationFrame
+let animationId = null;
+
 const renderLoop = () => {
     // uncomment this to pause between frames
     //debugger;
     grid.tick();
     drawGrid();
     drawCells();
-    requestAnimationFrame(renderLoop);
+    animationId = requestAnimationFrame(renderLoop);
 }
 
+const isPaused = () => {
+  return animationId === null;
+};
+
+const playPauseButton = document.getElementById("play-pause");
+
+const play = () => {
+  playPauseButton.textContent = "⏸";
+  renderLoop();
+};
+
+const pause = () => {
+  playPauseButton.textContent = "▶";
+  cancelAnimationFrame(animationId);
+  animationId = null;
+};
+
+playPauseButton.addEventListener("click", event => {
+  if (isPaused()) {
+    play();
+  } else {
+    pause();
+  }
+});
+// initial frame
 drawGrid();
 drawCells();
-requestAnimationFrame(renderLoop);
+
+play();
