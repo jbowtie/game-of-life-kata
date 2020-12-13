@@ -13,10 +13,10 @@ use game_of_life_kata::Grid;
 #[wasm_bindgen_test]
 pub fn test_empty_grid_creation() {
     // Let's create a grid in known state
-    let mut input_grid = Grid::create(2, 2);
+    let mut input_grid = Grid::create(2, 2, &[]);
 
     // expected state after one generation
-    let expected_grid = Grid::create(2, 2);
+    let expected_grid = Grid::create(2, 2, &[]);
 
     // verify the state
     assert_eq!(&input_grid.get_cells(), &expected_grid.get_cells());
@@ -26,13 +26,13 @@ pub fn test_empty_grid_creation() {
 #[wasm_bindgen_test]
 pub fn test_blinker_1() {
     // Let's create a grid in known state
-    let mut input_grid = Grid::create(5, 5);
+    let mut input_grid = Grid::create(5, 5, &[]);
 
     // expected state after one generation
-    let expected_grid = Grid::create(5, 5);
+    let expected_grid = Grid::create(5, 5, &[]);
 
     // advance the clock one generation
-    //input_grid.tick();
+    input_grid.tick();
 
     // verify the state
     assert_eq!(&input_grid.get_cells(), &expected_grid.get_cells());
